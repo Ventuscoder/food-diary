@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const app = express()
 const ejs = require('ejs')
 const session = require('express-session')
 const _ = require('lodash')
@@ -40,7 +41,7 @@ passport.deserializeUser(async(user, done)=>{
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: process.env.CALLBACK_URL
+    callbackURL: 'http://localhost:3000/auth/google/callback'
 }, async (accessToken, refreshToken, profile, cb) => {
     const foundUser = await Users.find({ googleID: profile.id })
     if (foundUser.length == 0) {
@@ -74,6 +75,15 @@ app.get('/logout', (req, res) => {
     res.redirect('/')
 })
 
-app.listen(8000, () => {
-    console.log('Server running on port 8000')
+app.get('/diary', (req, res) => {
+    if (req.isAuthenticated()) {
+        console.log(req.user)
+        res.send('Logged in')
+    } else {
+        res.redirect('/')
+    }
+})
+
+app.listen(3000, () => {
+    console.log('Server running on port 3000')
 })

@@ -1,0 +1,49 @@
+.enter-div {
+    margin: 10vh auto 0;
+    width: 50%;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 5px;
+    font-size: 30px;
+}
+
+.subtitle {
+    margin: 5px;
+    font-size: 20px;
+}
+
+.icon-div {
+    margin-top: 35px;
+    margin-bottom: 5px;
+}
+
+button {
+    display: inline-block;
+    margin: 7px 0 15px;
+    padding: 12px 9px;
+    background-color: rgb(125, 208, 125);
+    border: 3px solid black;
+    border-radius: 5px;
+}
+
+button a {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+}
+
+@media (max-width: 450px) {
+    .enter-div {
+        width: 80%;
+    }
+
+    h2 {
+        font-size: 25px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+}
