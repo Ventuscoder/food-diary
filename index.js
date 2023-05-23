@@ -8,6 +8,9 @@ const mongoose = require('mongoose')
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 
+const isToday = require('date-fns/isToday')
+const getDay = require('date-fns/getDay')
+
 mongoose.connect(process.env.URI)
 
 const userSchema = mongoose.Schema({
@@ -50,7 +53,7 @@ passport.use(new GoogleStrategy({
         for (let i = 0; i < days.length; i++) {
             sampleTargets.push({day: days[i], calories: 2500})
         }
-        const newUser = new Users({fullName: profile.displayName, googleID: profile.id, targets: sampleTargets, track: []})
+        const newUser = new Users({fullName: profile.displayName, googleID: profile.id, currentDate: new Date(), targets: sampleTargets, track: [{calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0}]})
         await newUser.save()
         cb(null, newUser)
     } else {
@@ -75,14 +78,34 @@ app.get('/logout', (req, res) => {
     res.redirect('/')
 })
 
-app.get('/diary', (req, res) => {
+app.get('/diary', async (req, res) => {
     if (req.isAuthenticated()) {
-        console.log(req.user)
-        res.send('Logged in')
+        if (!isToday(req.user.currentDate)) {
+            const newData = req.user
+            newData.currentDate = new Date()
+            if (newData.track.length > 1) {
+                newData.track = [{calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0}]
+            }
+            const updatedUser = await Users.findOneAndUpdate({_id: newData._id}, newData)
+            req.user = updatedUser
+        }
+        res.render('diary', {data: processUserData(req.user)})
     } else {
         res.redirect('/')
     }
 })
+
+function processUserData(user) {
+    const obj = {user, calorieMsg: ''}
+    const calorieTargetForToday = user.targets[getDay(user.currentDate)].calories
+    const calories = obj.user.track[0].calories
+    if (calories > calorieTargetForToday) {
+        obj.calorieMsg = `${calories-calorieTargetForToday}kcal over target today!`
+    } else {
+        obj.calorieMsg = `${calorieTargetForToday-calories}kcal remaining today`
+    }
+    return obj
+}
 
 app.listen(3000, () => {
     console.log('Server running on port 3000')

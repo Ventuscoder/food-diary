@@ -1,0 +1,26 @@
+<%- include('header') -%>
+    <link rel="stylesheet" href="diary.css">
+</head>
+<body>
+    <div class="diary">
+        <div class="user-controls">
+            <a href="/user"><i class="fa-solid fa-gear"></i> <%= data.user.fullName %></a>
+        </div>
+        <p><%= data.calorieMsg %></p>
+        <p>Today's stats:</p>
+        <p><%= data.user.track[0].calories %>kcal</p>
+        <p><%= data.user.track[0].protein %>g protein</p>
+        <p><%= data.user.track[0].carbs %>g carbs</p>
+        <p><%= data.user.track[0].fat %>g fat</p>
+        <p><%= data.user.track[0].fiber %>g fiber</p>
+        <a href="/add">Add food <i class="fa-solid fa-plus"></i></a>
+        <div class="meals">
+            <div class="food">Food</div>
+            <div class="calories">Kcal</div>
+            <% for (let i = 1; i < data.user.track.length; i++) { %>
+                <div class="food"><%= data.user.track[i].name %></div>
+                <div class="calories"><%= data.user.track[i].cal %></div>
+            <% } %>
+        </div>
+    </div>
+<%- include('footer') -%>

@@ -1,0 +1,47 @@
+.diary {
+    width: 60%;
+    margin: 10vh auto 0;
+    text-align: center;
+}
+
+.diary a {
+    color: rgb(41, 87, 148);
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+.user-controls {
+    margin-bottom: 25px;
+}
+
+.user-controls a {
+    font-size: 25px;
+    text-decoration: none;
+    color: rgb(41, 87, 148);
+    font-weight: 600;
+}
+
+p {
+    margin: 5px 0;
+}
+
+.meals {
+    background-color: black;
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    gap: 2px;
+}
+
+.food, .calories {
+    background-color: rgb(125, 208, 125);
+    padding: 5px 0;
+}
+
+@media (max-width: 450px) {
+    .diary {
+        width: 90%;
+    }
+}
