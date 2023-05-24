@@ -95,6 +95,30 @@ app.get('/diary', async (req, res) => {
     }
 })
 
+app.get('/user', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.render('user', {user: req.user})
+    } else {
+        res.redirect('/')
+    }
+})
+
+app.post('/targets', async (req, res) => {
+    const formData = req.body
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    let newTargets = []
+    for (let i = 0; i < days.length; i++) {
+        newTargets.push({day: days[i], calories: Number(formData[i])})
+    }
+    const newData = req.user
+    if (newData.targets !== newTargets) {
+        newData.targets = newTargets
+        const updatedUser = await Users.findOneAndUpdate({_id: newData._id}, newData)
+        req.user = updatedUser
+    }
+    res.redirect('/diary')
+})
+
 function processUserData(user) {
     const obj = {user, calorieMsg: ''}
     const calorieTargetForToday = user.targets[getDay(user.currentDate)].calories

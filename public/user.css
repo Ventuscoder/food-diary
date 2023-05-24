@@ -1,0 +1,76 @@
+.user {
+    width: 50%;
+    margin: 10vh auto 0;
+    text-align: center;
+}
+
+.nav-grid {
+    width: 170px;
+    margin: 0 auto;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 80px 80px;
+    gap: 10px;
+}
+
+button {
+    display: inline-block;
+    background-color: rgb(125, 208, 125);
+    border: 3px solid black;
+    border-radius: 5px;
+    padding: 10px 0;
+}
+
+button a {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+}
+
+.logout-btn {
+    border-color: red;
+}
+
+.logout-btn a {
+    color: red;
+}
+
+.edit-title {
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+.target-grid {
+    width: 100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 10px 15px;
+}
+
+.calorie-input input {
+    width: 50px;
+    padding: 0 5px;
+    background-color: rgb(125, 208, 125);
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.target-btn {
+    padding: 7px 5px;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.target-btn:hover {
+    background-color: black;
+    color: rgb(125, 208, 125);
+    cursor: pointer;
+}
+
+@media (max-width: 400px) {
+    .nav-grid {
+        grid-template-columns: 80px;
+        width: 80px;
+    }
+}

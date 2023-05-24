@@ -1,0 +1,22 @@
+<%- include('header') -%>
+    <link rel="stylesheet" href="user.css">
+</head>
+<body>
+    <div class="user">
+        <h3><%= user.fullName %></h3>
+        <div class="nav-grid">
+            <button><a href="/diary">Diary</a></button>
+            <button class="logout-btn"><a href="/logout">Logout</a></button>
+        </div>
+        <h3 class="edit-title">Edit your target calories here:</h3>
+        <form action="/targets" method="post">
+            <div class="target-grid">
+                <% for (let i = 0; i < user.targets.length; i++) { %>
+                    <div class="day-name"><%= user.targets[i].day %></div>
+                    <div class="calorie-input"><input type="number" min="500" max="4000" name="<%= i %>" value="<%= user.targets[i].calories %>"></div>
+                <% } %>
+            </div>
+            <button type="submit" class="target-btn">Save your targets</button>
+        </form>
+    </div>
+<%- include('footer') -%>
