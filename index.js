@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const ejs = require('ejs')
 const session = require('express-session')
+const axios = require('axios')
 const _ = require('lodash')
 const mongoose = require('mongoose')
 const passport = require('passport')
@@ -116,6 +117,34 @@ app.post('/targets', async (req, res) => {
         const updatedUser = await Users.findOneAndUpdate({_id: newData._id}, newData)
         req.user = updatedUser
     }
+    res.redirect('/diary')
+})
+
+app.get('/add', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.render('add')
+    } else {
+        res.redirect('/')
+    }
+})
+
+app.post('/add', async (req, res) => {
+    const { data } = await axios({
+        method: 'GET',
+        url: 'https://api.api-ninjas.com/v1/nutrition?query='+req.body.food,
+        headers: {
+            'X-Api-Key': process.env.API_KEY
+        }
+    })
+    const newUser = req.user
+    newUser.track.push({name: req.body.food, cal: Math.round(data[0].calories)})
+    newUser.track[0]['calories'] += Math.round(data[0].calories)
+    newUser.track[0]['protein'] += Math.round(data[0].protein_g)
+    newUser.track[0]['carbs'] += Math.round(data[0].carbohydrates_total_g)
+    newUser.track[0]['fat'] += Math.round(data[0].fat_total_g)
+    newUser.track[0]['fiber'] += Math.round(data[0].fiber_g)
+    const updatedUser = await Users.findOneAndUpdate({_id: newUser._id}, newUser)
+    req.user = updatedUser
     res.redirect('/diary')
 })
 

@@ -1,0 +1,17 @@
+<%- include('header') -%>
+    <link rel="stylesheet" href="add.css">
+</head>
+<body>
+    <div class="add">
+        <form action="/add" method="post">
+            <input type="text" placeholder="Type..." name="food">
+            <button type="submit">Add</button>
+        </form>
+        <h3>How you should search:</h3>
+        <p>(Number) (Measure) of (Food Item)</p>
+        <p>3oz of Salmon Fish</p>
+        <p>1.5 cups of Rice</p>
+        <p>15g of Milk Chocolate</p>
+        <p>2 scoops of Ice Cream</p>
+    </div>
+<%- include('footer') -%>
