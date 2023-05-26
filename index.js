@@ -4,7 +4,6 @@ const app = express()
 const ejs = require('ejs')
 const session = require('express-session')
 const axios = require('axios')
-const _ = require('lodash')
 const mongoose = require('mongoose')
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
