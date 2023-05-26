@@ -44,7 +44,7 @@ passport.deserializeUser(async(user, done)=>{
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: 'http://localhost:3000/auth/google/callback'
+    callbackURL: 'https://food-diary-7a2c.onrender.com/auth/google/callback'
 }, async (accessToken, refreshToken, profile, cb) => {
     const foundUser = await Users.find({ googleID: profile.id })
     if (foundUser.length == 0) {
